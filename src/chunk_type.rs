@@ -19,7 +19,7 @@ impl ChunkType {
         self.bytes
     }
 
-    fn as_slice(&self) -> &[u8] {
+    pub fn as_slice(&self) -> &[u8] {
         &self.bytes
     }
 
