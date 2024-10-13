@@ -19,6 +19,10 @@ impl ChunkType {
         self.bytes
     }
 
+    fn as_slice(&self) -> &[u8] {
+        &self.bytes
+    }
+
     fn is_valid(&self) -> bool {
         self.is_reserved_bit_valid()
     }
