@@ -14,12 +14,6 @@ impl Display for ChunkType {
 }
 
 impl ChunkType {
-    fn new(chunk: &[u8]) -> Self {
-        let mut bytes = [0; 4];
-        bytes.copy_from_slice(chunk);
-        Self { bytes }
-    }
-
     fn bytes(&self) -> [u8; 4] {
         self.bytes
     }
