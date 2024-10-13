@@ -1,4 +1,5 @@
 use std::convert::TryFrom;
+use std::error::Error;
 use std::fmt::Display;
 use std::str::{self, FromStr};
 
@@ -51,6 +52,8 @@ impl Display for TryFromChunkTypeError {
     }
 }
 
+impl Error for TryFromChunkTypeError {}
+
 impl TryFrom<[u8; 4]> for ChunkType {
     type Error = TryFromChunkTypeError;
 
@@ -85,6 +88,8 @@ impl Display for ParseChunkTypeError {
         }
     }
 }
+
+impl Error for ParseChunkTypeError {}
 
 impl FromStr for ChunkType {
     type Err = ParseChunkTypeError;
