@@ -48,7 +48,14 @@ impl Chunk {
     }
 
     fn as_bytes(&self) -> Vec<u8> {
-        Vec::new()
+        self.len
+            .to_be_bytes()
+            .iter()
+            .chain(self.chunk_type.as_slice().iter())
+            .chain(&self.data)
+            .chain(self.crc.to_be_bytes().iter())
+            .copied()
+            .collect()
     }
 }
 
