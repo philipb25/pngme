@@ -54,7 +54,12 @@ impl Chunk {
 
 impl Display for Chunk {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("Chunk { .. }")
+        f.debug_struct("Chunk")
+            .field("len", &self.len)
+            .field("chunk_type", &self.chunk_type)
+            .field("data", &self.data.len())
+            .field("crc", &self.crc)
+            .finish()
     }
 }
 
@@ -172,7 +177,6 @@ impl TryFrom<&[u8]> for Chunk {
                 expected: crc_given,
             }));
         }
-
         Ok(Self {
             len,
             chunk_type,
