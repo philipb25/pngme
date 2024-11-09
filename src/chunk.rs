@@ -126,15 +126,7 @@ impl Display for TryFromBytesErrorKind {
     }
 }
 
-impl error::Error for TryFromBytesErrorKind {
-    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
-        match self {
-            TryFromBytesErrorKind::ChunkType(source) => Some(source),
-            TryFromBytesErrorKind::NotEnoughBytes(source) => Some(source),
-            _ => None,
-        }
-    }
-}
+impl error::Error for TryFromBytesErrorKind {}
 
 impl From<TryFromChunkTypeError> for TryFromBytesError {
     fn from(err: TryFromChunkTypeError) -> Self {
