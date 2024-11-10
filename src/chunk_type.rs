@@ -135,6 +135,12 @@ mod tests {
     }
 
     #[test]
+    pub fn test_parse_method() -> Result<(), ParseChunkTypeError> {
+        let _chunk = "RuSt".parse::<ChunkType>()?;
+        Ok(())
+    }
+
+    #[test]
     pub fn test_chunk_type_is_critical() {
         let chunk = ChunkType::from_str("RuSt").unwrap();
         assert!(chunk.is_critical());
