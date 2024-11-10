@@ -109,7 +109,7 @@ impl FromStr for ChunkType {
         }
         let mut buf = [0; 4];
         buf.copy_from_slice(bytes);
-        Self::try_from(buf).map_err(|e| ParseChunkTypeError::NotInRange(e.value as char))
+        Self::try_from(buf).map_err(|e| ParseChunkTypeError::NotInRange(char::from(e.value)))
     }
 }
 
