@@ -5,10 +5,7 @@ use std::io::{self, BufReader, Read};
 use crate::chunk_type::{ChunkType, TryFromChunkTypeError};
 use crate::Result;
 
-/// 3.1 PNG file format
-pub const FILE_SIGNATURE: [u8; 8] = [137, 80, 78, 71, 13, 10, 26, 10];
-
-struct Chunk {
+pub struct Chunk {
     len: u32,
     chunk_type: ChunkType,
     data: Vec<u8>,
@@ -16,7 +13,7 @@ struct Chunk {
 }
 
 impl Chunk {
-    fn new(chunk_type: ChunkType, data: Vec<u8>) -> Self {
+    pub fn new(chunk_type: ChunkType, data: Vec<u8>) -> Self {
         let len = u32::try_from(data.len()).unwrap();
         let crc = calculate_crc(&chunk_type, &data);
         Self {
@@ -27,27 +24,27 @@ impl Chunk {
         }
     }
 
-    fn length(&self) -> u32 {
+    pub fn length(&self) -> u32 {
         self.len
     }
 
-    fn chunk_type(&self) -> &ChunkType {
+    pub fn chunk_type(&self) -> &ChunkType {
         &self.chunk_type
     }
 
-    fn data(&self) -> &[u8] {
+    pub fn data(&self) -> &[u8] {
         &self.data[..] // or `self.data.as_slice`
     }
 
-    fn crc(&self) -> u32 {
+    pub fn crc(&self) -> u32 {
         self.crc
     }
 
-    fn data_as_string(&self) -> Result<String> {
+    pub fn data_as_string(&self) -> Result<String> {
         Ok(String::from_utf8(self.data.clone())?)
     }
 
-    fn as_bytes(&self) -> Vec<u8> {
+    pub fn as_bytes(&self) -> Vec<u8> {
         self.len
             .to_be_bytes()
             .iter()
@@ -151,11 +148,12 @@ impl TryFrom<&[u8]> for Chunk {
         let chunk_type = ChunkType::try_from(buffer)?;
 
         if len == 0 {
+            let crc = calculate_crc(&chunk_type, &[]);
             return Ok(Self {
                 len,
                 chunk_type,
                 data: Vec::new(),
-                crc: 0,
+                crc,
             });
         }
 

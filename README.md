@@ -1,5 +1,5 @@
-# pngme
+# PNGme
 
-Attempt at the [`pngme`] challenge.
+Attempt at the [PNGme] challenge.
 
 [pngme]: https://jrdngr.github.io/pngme_book/introduction.html
