@@ -119,7 +119,7 @@ impl TryFrom<&[u8]> for Png {
                     // Add bytes for length, chunk type and crc32.
                     let amt = (chunk.length() + 12) as usize;
                     chunks.push(chunk);
-                    if amt >= reader.len() {
+                    if amt == reader.len() {
                         break 'chunks;
                     } else {
                         // Still bytes left in the reader. Advance.
