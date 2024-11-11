@@ -60,7 +60,7 @@ impl Display for Chunk {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("Chunk")
             .field("len", &self.len)
-            .field("chunk_type", &self.chunk_type)
+            .field("chunk_type", &self.chunk_type.as_str())
             .field("data", &self.data.len())
             .field("crc", &self.crc)
             .finish()

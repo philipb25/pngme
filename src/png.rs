@@ -1,4 +1,3 @@
-#![allow(unused_variables)]
 use std::error::Error;
 use std::fmt::Display;
 use std::io::{self, Read};
@@ -13,15 +12,15 @@ pub struct Png {
 impl Png {
     pub const SIGNATURE: [u8; 8] = [137, 80, 78, 71, 13, 10, 26, 10];
 
-    fn from_chunks(chunks: Vec<Chunk>) -> Self {
+    pub fn from_chunks(chunks: Vec<Chunk>) -> Self {
         Self { chunks }
     }
 
-    fn append_chunk(&mut self, chunk: Chunk) {
+    pub fn append_chunk(&mut self, chunk: Chunk) {
         self.chunks.push(chunk);
     }
 
-    fn remove_first_chunk(&mut self, chunk_type: &str) -> Result<Chunk, RemoveFirstChunkError> {
+    pub fn remove_first_chunk(&mut self, chunk_type: &str) -> Result<Chunk, RemoveFirstChunkError> {
         let chunk_type = chunk_type
             .parse::<ChunkType>()
             .map_err(|source| RemoveFirstChunkError::ParseChunk { source })?;
@@ -33,7 +32,7 @@ impl Png {
         Ok(self.chunks.remove(index))
     }
 
-    fn header(&self) -> &[u8; 8] {
+    pub fn header(&self) -> &[u8; 8] {
         &Self::SIGNATURE
     }
 
@@ -41,7 +40,7 @@ impl Png {
         &self.chunks[..]
     }
 
-    fn chunk_by_type(&self, chunk_type: &str) -> Option<&Chunk> {
+    pub fn chunk_by_type(&self, chunk_type: &str) -> Option<&Chunk> {
         let chunk_type = chunk_type.parse::<ChunkType>().ok()?;
         self.chunks.iter().find(|&c| c.chunk_type() == &chunk_type)
     }
