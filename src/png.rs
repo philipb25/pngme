@@ -47,16 +47,12 @@ impl Png {
     }
 
     pub fn as_bytes(&self) -> Vec<u8> {
-        // let mut bytes = vec![];
-        // bytes.extend(Self::SIGNATURE);
-        // for chunk in self.chunks.iter() {
-        //     bytes.extend(chunk.as_bytes());
-        // }
-        // bytes
-        if let Some(last) = self.chunks.last() {
-            eprintln!("{last}");
+        let mut bytes = vec![];
+        bytes.extend(Self::SIGNATURE);
+        for chunk in self.chunks.iter() {
+            bytes.extend(chunk.as_bytes());
         }
-        vec![]
+        bytes
     }
 }
 
@@ -321,8 +317,7 @@ mod tests {
                 eprintln!("mismatch at [{i}]: {a}, {e}");
             }
         }
-        dbg!(&actual[4795..], &expected[4795..]);
-        panic!();
+        assert_eq!(&actual, &expected);
     }
 
     #[test]
