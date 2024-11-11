@@ -148,11 +148,12 @@ impl TryFrom<&[u8]> for Chunk {
         let chunk_type = ChunkType::try_from(buffer)?;
 
         if len == 0 {
+            let crc = calculate_crc(&chunk_type, &[]);
             return Ok(Self {
                 len,
                 chunk_type,
                 data: Vec::new(),
-                crc: 0,
+                crc,
             });
         }
 
